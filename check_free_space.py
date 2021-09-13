@@ -1,14 +1,14 @@
 import shutil
 import json
 import requests
-from config import SLACK_WEBHOOK_URL
+from config import SLACK_WEBHOOK_URL, MIN_FREE_SPACE_GB
 
 def send_report_to_slack():
     total, used, free = shutil.disk_usage("/")
     total_space_in_gb = total// (2**30)
     used_space_in_gb = used// (2**30)
     free_space_in_gb = free// (2**30)
-    if free_space_in_gb < 1000:
+    if free_space_in_gb < MIN_FREE_SPACE_GB:
         title_of_notification = f'Внимание, заканчивается место на сервере!!!'
         message_text = f'Total: {total_space_in_gb} GiB\nUsed: {used_space_in_gb} GiB\nFree: {free_space_in_gb} GiB'
 
